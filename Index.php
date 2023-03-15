@@ -4,7 +4,17 @@
     <title>Login Page</title>
 </head>
 <body>
-<p>Логин</p>
-<p>Пароль</p>
+<form style="display: inline-grid;"> <!--method="post"  action="something.php"-->
+    Авторизация <br><br>
+    Логин: <input name="login" type="text"><br>
+    Пароль: <input name="password" type="text"><br>
+<input type="submit">
+</form>
+<form style="display: inline-grid;margin-left: 100px"> <!--method="post"-->
+    Регистрация<br><br>
+    Логин: <input name="login" type="text"><br>
+    Пароль: <input name="password" type="text"><br>
+    <input type="submit">
+</form>
 </body>
 </html>
