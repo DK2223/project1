@@ -1,15 +1,14 @@
 <?php
 
-require_once ('vendor/autoload.php');
-$user = $_POST['user'];
-$password = $_POST['password'];
+use Application\Config;
 
-$UserKey = array_search($user,$UsersArray);
-$PasswordKey = array_search($password,$PasswordKey);
-
-
-function printr($name, bool $die = false) {
-
+function printr($name, bool $die = false)
+{
     echo '<pre>',print_r($name, true),'</pre>';
     if ($die) die();
+}
+
+function checkPassword(string  $password): bool
+{
+    return md5($password) == Config::get('hash');
 }
