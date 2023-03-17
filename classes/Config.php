@@ -1,7 +1,5 @@
 <?php
 
-namespace Application;
-
 /**
  * Класс для получения рсновных настроек проекта
  */
@@ -38,4 +36,5 @@ class Config
 
        return $config->_get($param_name, $defaultValue);
    }
+
 }

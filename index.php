@@ -1,11 +1,11 @@
 <?php
 
-use Application\Config;
+require_once 'classes/config.php';
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 $login = $_POST['login'] ?? '';
-$password = $_POST['password'] ?? '';
+$password = md5($_POST['password'] ?? '');
 
 $error = [];
 
@@ -13,7 +13,7 @@ if ($login != Config::get('login')) {
 
     $error['login'] = 'Undefined login';
 
-} elseif (!checkPassword($password)) {
+}elseif ($password != Config::get('hash')) {
 
     $error['password'] = 'Incorrect password';
 } else {
