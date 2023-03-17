@@ -1,6 +1,7 @@
 <?php
 
 require_once 'classes/config.php';
+require_once 'classes/Session.php';
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
@@ -17,7 +18,8 @@ if ($login != Config::get('login')) {
 
     $error['password'] = 'Incorrect password';
 } else {
-
+    $session = new Session();
+    $session->start();
     header("Location: /success.php");
     exit();
 }

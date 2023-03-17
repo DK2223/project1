@@ -36,5 +36,4 @@ class Config
 
        return $config->_get($param_name, $defaultValue);
    }
-
 }
