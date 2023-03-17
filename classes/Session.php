@@ -1,48 +1,93 @@
 <?php
 
+namespace Application;
+
+use Exception;
+use SplFileInfo;
+
+/**
+ * @property bool $is_auth
+ * @property string $error
+ */
 class Session
 {
-
-    private $cookieTime;
-
+    /**
+     * @var bool
+     */
+    private $is_auth;
+    /**
+     * @var string
+     */
+    private $error;
 
     // задаем время жизни сессионных кук
     public function __construct(string $cookieTime = '+7 days')
     {
-        $this->cookieTime = strtotime($cookieTime);
-        session_cache_limiter(false);
-    }
-
-
-    // стартуем сессию
-    public function start()
-    {
         session_start();
-        $name = session_id();
+
+        $this->is_auth = $_SESSION['is_auth'] ?? null;
+        $this->error = $_SESSION['error'] ?? null;
     }
 
-    public static function check()
+    private function setIs_auth(bool $auth)
     {
-        $name = session_id();
+        $this->is_auth = $auth;
+        $_SESSION['is_auth'] = $auth;
     }
-  /*  public static function check()
+
+    private function setError(string $message)
     {
-        if (isset($name)){
-            return $foo = True;
-        }
-        else {
-            return $foo = False;
-        }
+        $this->error = $message;
+        $_SESSION['error'] = $message;
     }
 
-
-    public function isSessionExsists() {
-        $sessionName = session_name();
-        if (isset($_COOKIE[$sessionName]) || isset($_REQUEST[$sessionName])) {
-            session_start();
-            return !empty($_SESSION);
-        }
-        return false;
+    private function getIs_auth(): bool
+    {
+        return $this->is_auth;
     }
-*/
+
+    private function issetIs_auth(): bool
+    {
+        return !is_null($this->is_auth);
+    }
+
+    private function unsetIs_auth()
+    {
+        $this->is_auth = null;
+    }
+
+    /**
+     * @param string $name
+     * @param $value
+     * @throws Exception
+     */
+    public function __set(string $name, $value)
+    {
+        $method = 'set'. ucfirst($name);
+
+        if (method_exists($this, $method)) {
+
+            $this->{$method}($value);
+            return;
+        }
+
+        throw new Exception(
+            sprintf('Unknown method "%s" in class "%s"', $method, static::class)
+        );
+    }
+
+    public function __get($name)
+    {
+        return $_SESSION[$name] ?? null;
+    }
+
+    public function __isset($name)
+    {
+        return isset($_SESSION);
+    }
+
+    public function __unset($name)
+    {
+        return isset($_SESSION);
+    }
 }

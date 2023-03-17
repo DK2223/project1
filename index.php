@@ -1,27 +1,38 @@
 <?php
 
-require_once 'classes/config.php';
-require_once 'classes/Session.php';
+use Application\Config;
+use Application\Session;
 
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
 $login = $_POST['login'] ?? '';
 $password = md5($_POST['password'] ?? '');
 
+$session = new Session();
+
 $error = [];
+if (isset($session->error)) {
 
-if ($login != Config::get('login')) {
+    $error['login'] = $session->error;
+    unset($session->error);
+}
 
-    $error['login'] = 'Undefined login';
+if (isset($_POST['login'])) {
 
-}elseif ($password != Config::get('hash')) {
+    if ($login != Config::get('login')) {
 
-    $error['password'] = 'Incorrect password';
-} else {
-    $session = new Session();
-    $session->start();
-    header("Location: /success.php");
-    exit();
+        $error['login'] = 'Undefined login';
+
+    } elseif ($password != Config::get('hash')) {
+
+        $error['password'] = 'Incorrect password';
+    } else {
+
+        $session->is_auth = true;
+
+        header("Location: /success.php");
+        exit();
+    }
 }
 ?>
 <!doctype html>

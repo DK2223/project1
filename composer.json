@@ -1,7 +1,20 @@
 {
-  "autoload": {
-    "psr-4": {
-      "Application\\": "classes/"
+    "name": "kuzmin_di/project1",
+    "authors": [
+        {
+            "name": "DK2223",
+            "email": "privade14@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "classes/"
+        },
+        "files": [
+            "functions.php"
+        ]
     }
-  }
 }

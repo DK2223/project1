@@ -1,5 +1,7 @@
 <?php
 
+namespace Application;
+
 /**
  * Класс для получения рсновных настроек проекта
  */
@@ -9,7 +11,8 @@ class Config
 
    private static $instance;
 
-   private function __construct(){
+   private function __construct()
+   {
 
        $this->params = require_once(dirname(__FILE__, 2).'/config.php');
    }
